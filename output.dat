@@ -1,0 +1,203 @@
+BOLSIG+ version: 11/2019
+Collision input data:
+--------------------------------------------------
+Ar                                                              
+C:\Users\kuval\Downloads\Danil\diplom-main\bolsigplus122019-win\SigloDataBase-LXCat-04Jun2013.txt
+How to reference in publications:
+1) Yamabe, Buckman, and Phelps, Phys. Rev. 27, 1345 (1983). Revised Oct 1997
+2) PHELPS database,http://www.lxcat.laplace.univ-tlse.fr, retrieved June 4, 2013.
+ 
+ 
+ 
+Angular frequency / N (m3/s)              0.1000E-11
+Cosine of E-B field angle                  0.000    
+Gas temperature (K)                        300.0    
+Excitation temperature (K)                 300.0    
+Transition energy (eV)                     0.000    
+Ionization degree                          0.000    
+Plasma density (1/m3)                     0.1000E+19
+Ion charge parameter                       0.000    
+Ion/neutral mass ratio                     1.000    
+Coulomb collision model                    1.000    
+Energy sharing                             1.000    
+Growth model                               1.000    
+Maxwellian mean energy (eV)                0.000    
+# of grid points                           100.0    
+Precision                                 0.1000E-09
+Convergence                               0.1000E-04
+Maximum # of iterations                    2000.    
+Mole fraction Ar                           1.000    
+ 
+ 
+E/N (Td)    	Electric field / N (Td)                                         
+1.000	1.000
+112.0	112.0
+445.0	445.0
+1000.	1000.
+ 
+ 
+E/N (Td)    	Grid type                                                       
+1.000	0.000
+112.0	3.000
+445.0	3.000
+1000.	3.000
+ 
+ 
+E/N (Td)    	Maximum energy                                                  
+1.000	-1.000
+112.0	0.7960
+445.0	22.27
+1000.	41.97
+ 
+ 
+E/N (Td)	Mean energy (eV)
+1.000	0.4524E-01
+112.0	2.539
+445.0	4.027
+1000.	5.846
+ 
+ 
+E/N (Td)	Mobility *N (1/m/V/s)
+1.000	0.1410E+27
+112.0	0.4404E+26
+445.0	0.1047E+26
+1000.	0.2522E+25
+ 
+ 
+E/N (Td)	Re/perp mobility *N (1/m/V/s)
+1.000	0.3139E+21
+112.0	0.1443E+23
+445.0	0.2325E+23
+1000.	0.3093E+23
+ 
+ 
+E/N (Td)	Im/Hall mobility *N (1/m/V/s)
+1.000	-0.1768E+24
+112.0	-0.1735E+24
+445.0	-0.1705E+24
+1000.	-0.1680E+24
+ 
+ 
+E/N (Td)	Diffusion coefficient *N (1/m/s)
+1.000	0.4277E+25
+112.0	0.1876E+26
+445.0	0.1271E+26
+1000.	0.8497E+25
+ 
+ 
+E/N (Td)	Energy mobility *N (1/m/V/s)
+1.000	0.3483E+27
+112.0	0.8529E+25
+445.0	0.3168E+25
+1000.	0.1752E+25
+ 
+ 
+E/N (Td)	Energy diffusion coef. *N (1/m/s)
+1.000	0.1052E+26
+112.0	0.8566E+25
+445.0	0.6868E+25
+1000.	0.6312E+25
+ 
+ 
+E/N (Td)	Total collision freq. /N (m3/s)
+1.000	0.2235E-14
+112.0	0.4410E-13
+445.0	0.7958E-13
+1000.	0.1183E-12
+ 
+ 
+E/N (Td)	Momentum frequency /N (m3/s)
+1.000	0.1785E-14
+112.0	0.8259E-13
+445.0	0.1346E-12
+1000.	0.1817E-12
+ 
+ 
+E/N (Td)	Total ionization freq. /N (m3/s)
+1.000	0.000
+112.0	0.1793E-18
+445.0	0.6619E-16
+1000.	0.6959E-15
+ 
+ 
+E/N (Td)	Power /N (eV m3/s)
+1.000	0.3139E-21
+112.0	0.1810E-15
+445.0	0.4603E-14
+1000.	0.3093E-13
+ 
+ 
+E/N (Td)	Elastic power loss /N (eV m3/s)
+1.000	0.3132E-21
+112.0	0.7404E-17
+445.0	0.1797E-16
+1000.	0.3308E-16
+ 
+ 
+E/N (Td)	Inelastic power loss /N (eV m3/s)
+1.000	-0.5816-207
+112.0	0.1731E-15
+445.0	0.4319E-14
+1000.	0.2683E-13
+ 
+ 
+E/N (Td)	Growth power /N (eV m3/s)
+1.000	0.000
+112.0	0.4554E-18
+445.0	0.2666E-15
+1000.	0.4070E-14
+ 
+ 
+E/N (Td)	Maximum energy
+1.000	0.7960
+112.0	22.27
+445.0	41.97
+1000.	78.16
+ 
+ 
+E/N (Td)	# of iterations
+1.000	8.000
+112.0	88.00
+445.0	35.00
+1000.	35.00
+ 
+ 
+E/N (Td)	# of grid trials
+1.000	2.000
+112.0	21.00
+445.0	5.000
+1000.	5.000
+ 
+ 
+C1    Ar    Effective (momentum)                                
+E/N (Td)	Rate coefficient (m3/s)
+1.000	0.2235E-14
+112.0	0.4410E-13
+445.0	0.7958E-13
+1000.	0.1183E-12
+ 
+ 
+C2    Ar    Excitation    11.50 eV                              
+E/N (Td)	Rate coefficient (m3/s)
+1.000	0.000
+112.0	0.1481E-16
+445.0	0.2846E-15
+1000.	0.1377E-14
+ 
+ 
+C3    Ar    Ionization    15.80 eV                              
+E/N (Td)	Rate coefficient (m3/s)
+1.000	0.000
+112.0	0.1793E-18
+445.0	0.6619E-16
+1000.	0.6959E-15
+ 
+ 
+Ar                                                              
+E/N (Td)	Inelastic energy loss coefficient (eV m3/s)
+1.000	0.000
+112.0	0.1731E-15
+445.0	0.4319E-14
+1000.	0.2683E-13
+ 
+ 
