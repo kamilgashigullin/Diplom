@@ -37,7 +37,7 @@ FF = np.zeros((N,M))
 Net = np.zeros((N,M))
 for j in range(0,M):
     for i in range(0,N):
-        FF[i,j] = (-50*z[j])
+        FF[i,j] = -50  #(-50*z[j])
         Net[i,j] = p/(k*T)
         ne[i][j] = ne_0*(1-(r[i]/R)**2)*(z[j]*(L-z[j]))
 
@@ -45,6 +45,8 @@ ni = ne.copy()
 nm = ne.copy()
 
 for i in range(N):
-    FF[i,0] = 0 #низ
+    FF[i,0] = -50  #низ 0
 for i in range(N):
     FF[i,M-1] = -50
+for j in range(1,M-1):
+    FF[N-1,j] = (FF[N-1,M-1]-FF[N-1,0])/L * j *hz + FF[N-1,0]
