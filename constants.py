@@ -1,7 +1,9 @@
 import numpy as np
-global eps0, e, p, NE0, E0, F0, U1, U2, mue, mui, alpha, ne_0, k, T, N, M, r, hr, hz
+global eps0, e, p, NE0, E0, F0, U1, U2, mue, mui, alpha, ne_0, k, T, N, M, r, hr, hz, epsilon_water,M1
 eps0 = (8.85e-12)
 e = (1.6e-19)
+epsilon_water = 81
+
 p = 1e5
 NE0 = 1e18
 E0 = 5e3
@@ -17,8 +19,9 @@ T = 300
 
 N = 4
 M = N
-
+M1 = M//2
 ne = np.zeros((N,M))
+ni = np.zeros((N,M))
 De = np.zeros((N,M))
 
 L = 1
@@ -41,7 +44,13 @@ for j in range(0,M):
         Net[i,j] = p/(k*T)
         ne[i][j] = ne_0*(1-(r[i]/R)**2)*(z[j]*(L-z[j]))
 
-ni = ne.copy()
+for j in range(M):
+    for i in range(N):
+        if r[i] < 0.85:
+            ni[i, j] = ne[i, j]
+        else:
+            ni[i, j] = ne[i, j] + (r[i] - 0.85) / (R - 0.85) * (0.3e17 - ne[i, j])
+            ni[i, j] = max(ne[i, j], ni[i, j])
 nm = ne.copy()
 
 for i in range(N):

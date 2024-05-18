@@ -45,7 +45,104 @@ def fsolve(FF,ne,ni,omega_relax = 1.8):
         corrector = np.zeros((N*M))
 
         
-        for j in range(1,M-1):
+        for j in range(1,M1):
+            # Граничные условия второго рода слева  
+            k = j*N
+           #print('Слагаемые  для вычисления невязки на левой границе')
+            #print("d[k] = ",d[k],'FF[0,j] =  ',FF[0,j],'l1[k] = ',l1[k],'FF[1,j] = ',FF[1,j], 'l2[k] = ',l2[k],'FF[0,j+1] = ',FF[0,j+1],'f[0,j] = ',f[0,j], 'k =  ',k )
+            rr = (epsilon_water)*d[k]*FF[0,j] + epsilon_water*l1[k]*FF[1,j] + epsilon_water*l2[k]*FF[0,j+1]+ epsilon_water*l2_[k-N]*FF[0,j-1]           
+            # rr = (FF[0,j]*(2/hr**2) - FF[1,j]*(2/hr**2))\
+            # - 1/hz**2 * FF[0,j-1] + 2/hz**2 * FF[0,j] - 1/hz**2 * FF[0,j+1]\
+            # - f[0,j]
+            resid[j*N] = rr
+            rn = rn+rr**2
+            print('rr невязка левые граница', rr )
+            FF1[0,j] = FF[0,j] - (omega_relax*rr)/d[j*N]
+            norm_dif = max(norm_dif,abs((omega_relax*rr)/(d[j*N])))
+            
+            # Обходим внутренние узлы
+
+            for i in range(1,N-1):
+                k = i+j*N
+                print("Слагаемые для расчета невязки по внутренним узлам В воде")
+                print("d[k] = ",d[k],'FF[i,j] =  ',FF[i,j],'l1[k] = ',l1[k],'l1_[k-1] = ',l1_[k-1],'FF[i-1,j] = ',FF[i-1,j], 'FF[i+1,j] = ',FF[i+1,j], 'l2[k] = ',l2[k],'FF[i,j+1] = ',FF[i,j+1],'l2_[k-N] = ',l2_[k-N],'FF[i,j-1] = ',FF[i,j-1],'f[i,j] = ',f[i,j], 'k =  ',k )
+                rr = epsilon_water*l2_[k-N]*FF[i,j-1] + epsilon_water*l1_[k-1]*FF[i-1,j] + (epsilon_water)*d[k]*FF[i,j] + epsilon_water*l1[k]*FF[i+1,j] + epsilon_water*l2[k]*FF[i,j+1] 
+                # rr = -(FF[i-1,j]*(r[i]- hr/2) - 2*FF[i,j]*r[i] + FF[i+1,j]*(r[i]+hr/2)) / (hr**2 * r[i]) -(FF[i,j-1] - 2*FF[i,j] + FF[i,j+1])/hz**2 - f[i,j]
+                #rr_glob = d[i]/FF_glob[i] + l1_[i]*FF_glob[i-N-1] + 
+                corrector[i+j*N] = rr - omega_relax*(l1[i+j*N-1]*corrector[i+j*N -1] 
+                                                     - l2[i+(j-1)*N]*corrector[i+(j-1)*N])/d[i+j*N]
+              
+                resid[i+j*N] = rr
+                rn = rn+rr**2
+                print ('i = ',i,'j = ', j, 'rr = ',float(rr),'rn = ',float(rn))
+                FF1[i,j] = FF[i,j] - omega_relax*corrector[i+j*N]
+                norm_dif = max(norm_dif,abs(omega_relax*corrector[i+j*N]))
+        
+        # Граничные условия второго рода слева  
+        k = M1*N
+           #print('Слагаемые  для вычисления невязки на левой границе')
+            #print("d[k] = ",d[k],'FF[0,j] =  ',FF[0,j],'l1[k] = ',l1[k],'FF[1,j] = ',FF[1,j], 'l2[k] = ',l2[k],'FF[0,j+1] = ',FF[0,j+1],'f[0,j] = ',f[0,j], 'k =  ',k )
+        rr = (epsilon_water)*d[k]*FF[0,M1] + epsilon_water*l1[k]*FF[1,M1] +l2[k]*FF[0,M1+1]+ epsilon_water*l2_[k-N]*FF[0,M1-1]           
+            # rr = (FF[0,j]*(2/hr**2) - FF[1,j]*(2/hr**2))\
+            # - 1/hz**2 * FF[0,j-1] + 2/hz**2 * FF[0,j] - 1/hz**2 * FF[0,j+1]\
+            # - f[0,j]
+        resid[M1*N] = rr
+        rn = rn+rr**2
+        print('rr невязка левые граница', rr )
+        FF1[0,M1] = FF[0,M1] - (omega_relax*rr)/d[M1*N]
+        norm_dif = max(norm_dif,abs((omega_relax*rr)/(d[M1*N])))
+            
+            # Обходим внутренние узлы
+
+        for i in range(1,N-1):
+             
+             k = i+M1*N
+             print("Слагаемые для расчета невязки по внутренним узлам В воде")
+             print("d[k] = ",d[k],'FF[i,j] =  ',FF[i,M1],'l1[k] = ',l1[k],'l1_[k-1] = ',l1_[k-1],'FF[i-1,j] = ',FF[i-1,j], 'FF[i+1,j] = ',FF[i+1,j], 'l2[k] = ',l2[k],'FF[i,j+1] = ',FF[i,j+1],'l2_[k-N] = ',l2_[k-N],'FF[i,j-1] = ',FF[i,j-1],'f[i,j] = ',f[i,j], 'k =  ',k )
+             rr = epsilon_water*l2_[k-N]*FF[i,M1-1] + epsilon_water*l1_[k-1]*FF[i-1,M1] + (epsilon_water)*d[k]*FF[i,M1] + epsilon_water*l1[k]*FF[i+1,M1] + l2[k]*FF[i,M1+1] 
+                # rr = -(FF[i-1,j]*(r[i]- hr/2) - 2*FF[i,j]*r[i] + FF[i+1,j]*(r[i]+hr/2)) / (hr**2 * r[i]) -(FF[i,j-1] - 2*FF[i,j] + FF[i,j+1])/hz**2 - f[i,j]
+                #rr_glob = d[i]/FF_glob[i] + l1_[i]*FF_glob[i-N-1] + 
+             corrector[i+M1*N] = rr - omega_relax*(l1[i+M1*N-1]*corrector[i+M1*N -1] 
+                                                     - l2[i+(M1-1)*N]*corrector[i+(M1-1)*N])/d[i+M1*N]
+              
+             resid[i+M1*N] = rr
+             rn = rn+rr**2
+             print ('i = ',i,'j = ', M1, 'rr = ',float(rr),'rn = ',float(rn))
+             FF1[i,M1] = FF[i,M1] - omega_relax*corrector[i+M1*N]
+             norm_dif = max(norm_dif,abs(omega_relax*corrector[i+M1*N]))
+
+        k = (M1+1)*N
+           #print('Слагаемые  для вычисления невязки на левой границе')
+            #print("d[k] = ",d[k],'FF[0,j] =  ',FF[0,j],'l1[k] = ',l1[k],'FF[1,j] = ',FF[1,j], 'l2[k] = ',l2[k],'FF[0,j+1] = ',FF[0,j+1],'f[0,j] = ',f[0,j], 'k =  ',k )
+        rr = d[k]*FF[0,M1+1] + l1[k]*FF[1,M1+1] +l2[k]*FF[0,M1+1]+ epsilon_water*l2_[k-N]*FF[0,M1]           
+            # rr = (FF[0,j]*(2/hr**2) - FF[1,j]*(2/hr**2))\
+            # - 1/hz**2 * FF[0,j-1] + 2/hz**2 * FF[0,j] - 1/hz**2 * FF[0,j+1]\
+            # - f[0,j]
+        resid[(M1+1)*N] = rr
+        rn = rn+rr**2
+        print('rr невязка левые граница', rr )
+        FF1[0,M1+1] = FF[0,M1+1] - (omega_relax*rr)/d[(M1+1)*N]
+        norm_dif = max(norm_dif,abs((omega_relax*rr)/(d[(M1+1)*N])))
+            
+            # Обходим внутренние узлы
+
+        for i in range(1,N-1):
+             
+             k = i+(M1+1)*N
+             print("Слагаемые для расчета невязки по внутренним узлам В воде")
+             print("d[k] = ",d[k],'FF[i,j] =  ',FF[i,M1+1],'l1[k] = ',l1[k],'l1_[k-1] = ',l1_[k-1],'FF[i-1,j] = ',FF[i-1,j], 'FF[i+1,j] = ',FF[i+1,j], 'l2[k] = ',l2[k],'FF[i,j+1] = ',FF[i,j+1],'l2_[k-N] = ',l2_[k-N],'FF[i,j-1] = ',FF[i,j-1],'f[i,j] = ',f[i,j], 'k =  ',k )
+             rr = epsilon_water*l2_[k-N]*FF[i,M1] + l1_[k-1]*FF[i-1,M1+1] + d[k]*FF[i,M1+1] + l1[k]*FF[i+1,M1+1] + l2[k]*FF[i,M1+2] -f[i,M1+1]
+                # rr = -(FF[i-1,j]*(r[i]- hr/2) - 2*FF[i,j]*r[i] + FF[i+1,j]*(r[i]+hr/2)) / (hr**2 * r[i]) -(FF[i,j-1] - 2*FF[i,j] + FF[i,j+1])/hz**2 - f[i,j]
+                #rr_glob = d[i]/FF_glob[i] + l1_[i]*FF_glob[i-N-1] + 
+             corrector[i+M1*N] = rr - omega_relax*(l1[i+M1*N-1]*corrector[i+M1*N -1] 
+                                                     - l2[i+(M1-1)*N]*corrector[i+(M1-1)*N])/d[i+M1*N]
+              
+             resid[i+M1*N] = rr
+             rn = rn+rr**2
+             print ('i = ',i,'j = ', M1, 'rr = ',float(rr),'rn = ',float(rn))
+             FF1[i,M1] = FF[i,M1] - omega_relax*corrector[i+M1*N]
+             norm_dif = max(norm_dif,abs(omega_relax*corrector[i+M1*N]))
+        for j in range(M1+1,M-1):
             # Граничные условия второго рода слева  
             k = j*N
            #print('Слагаемые  для вычисления невязки на левой границе')
@@ -61,6 +158,7 @@ def fsolve(FF,ne,ni,omega_relax = 1.8):
             norm_dif = max(norm_dif,abs((omega_relax*rr)/(d[j*N])))
             
             # Обходим внутренние узлы
+
             for i in range(1,N-1):
                 k = i+j*N
                 print("Слагаемые для расчета невязки по внутренним узлам")
